@@ -1,7 +1,7 @@
 import express from 'express';
-import userRouter from './userRoutes';
-import ticketRouter from './ticketRoutes';
-import authenticateToken from '../../middleware/auth.js';
+import userRouter from './userRoutes.js';
+import ticketRouter from './ticketRoutes.js';
+import authenticateToken from "../../middleware/auth.js";
 
 const router = express.Router();
 

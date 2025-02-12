@@ -7,7 +7,7 @@ import { sequelize } from './config/connection.js';
 import routes from './routes/index.js';
 import userRoutes from "./routes/api/userRoutes.js";
 
-dotenv.config(); // Load environment variables at the start
+dotenv.config(); 
 
 // Create an instance of the Express application
 const app = express();
@@ -33,7 +33,7 @@ const __dirname = path.dirname(__filename);
 app.use(express.static(path.join(__dirname, '../client/dist')));
 
 // Use the consolidated routes
-app.use('/api', routes); // Ensure routes are prefixed with /api
+app.use('/api', routes); 
 
 // Use the comment routes
 app.use("/api/user", userRoutes);
@@ -47,7 +47,7 @@ app.get('*', (req, res) => {
 sequelize.authenticate()
   .then(() => {
     console.log('✅ Connected to the database successfully.');
-    return sequelize.sync(); // Sync models with database
+    return sequelize.sync(); 
   })
   .then(() => {
     console.log('🚀 Database synced!');
