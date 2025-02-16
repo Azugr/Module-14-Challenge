@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "es6",
-    "module": "commonjs",
+    "module": "esnext",
     "rootDir": "src",
     "outDir": "dist",
     "jsx": "react-jsx",
@@ -9,13 +9,12 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "types": ["node"]
+    "types": ["vite/client", "react", "react-dom"]
   },
   "include": ["src/**/*"],
   "exclude": [
     "vite.config.js",
     "node_modules",
-    "dist",
-    "client"
+    "dist"
   ]
 }

@@ -1,21 +1,21 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { login } from "../api/authAPI";
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { login } from '../api/authAPI';
+import { LoginCredentials } from '../interfaces/interfaces';
 
 const LoginPage = () => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [credentials, setCredentials] = useState<LoginCredentials>({ username: '', password: '' });
+  const [error, setError] = useState('');
   const navigate = useNavigate();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError("");
+    setError('');
     try {
-      await login(username, password);
-      navigate("/kanban");
+      await login(credentials.username, credentials.password);
+      navigate('/kanban');
     } catch (err) {
-      setError("Invalid username or password");
+      setError('Invalid username or password');
     }
   };
 
@@ -29,8 +29,8 @@ const LoginPage = () => {
             <label className="block text-gray-700">Username</label>
             <input
               type="text"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              value={credentials.username}
+              onChange={(e) => setCredentials({ ...credentials, username: e.target.value })}
               className="w-full px-3 py-2 border rounded-lg"
               required
             />
@@ -39,8 +39,8 @@ const LoginPage = () => {
             <label className="block text-gray-700">Password</label>
             <input
               type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              value={credentials.password}
+              onChange={(e) => setCredentials({ ...credentials, password: e.target.value })}
               className="w-full px-3 py-2 border rounded-lg"
               required
             />

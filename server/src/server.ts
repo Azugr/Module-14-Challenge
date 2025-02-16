@@ -8,6 +8,7 @@ import routes from './routes/index.js';
 import userRoutes from './routes/api/userRoutes.js'; 
 import authRoutes from './routes/api/authRoutes.js'; 
 import ticketRoutes from './routes/api/ticketRoutes.js'; 
+import seedRoutes from './routes/api/seedRoutes.js'; 
 
 dotenv.config(); 
 
@@ -43,6 +44,9 @@ app.use('/api/user', userRoutes);
 
 // Use the auth routes
 app.use('/api/auth', authRoutes); // Add the auth routes
+
+// Use the seed routes
+app.use('/api/seed', seedRoutes); // Add the seed routes
 
 // Serve the main HTML file for the root URL
 app.get('*', (req, res) => {

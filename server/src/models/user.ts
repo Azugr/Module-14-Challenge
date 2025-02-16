@@ -5,7 +5,7 @@ interface UserAttributes {
   id: number;
   username: string;
   email: string;
-  password: string;
+  password: string; // This is the plain password
 }
 
 interface UserCreationAttributes extends Optional<UserAttributes, 'id'> {}
@@ -14,7 +14,9 @@ export class User extends Model<UserAttributes, UserCreationAttributes> implemen
   public id!: number;
   public username!: string;
   public email!: string;
-  public password!: string;
+
+  // Use a private property for the hashed password
+  private _password!: string;
 
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
@@ -22,7 +24,12 @@ export class User extends Model<UserAttributes, UserCreationAttributes> implemen
   // Hash the password before saving the user
   public async setPassword(password: string) {
     const saltRounds = 10;
-    this.password = await bcrypt.hash(password, saltRounds);
+    this._password = await bcrypt.hash(password, saltRounds);
+  }
+
+  // Getter for the hashed password
+  public get password(): string {
+    return this._password; // Return the hashed password
   }
 }
 
@@ -41,7 +48,9 @@ export function UserFactory(sequelize: Sequelize): typeof User {
       email: {
         type: DataTypes.STRING,
         allowNull: false,
+        unique: true, // Ensure email is unique
       },
+      // Do not expose the password field directly
       password: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -51,7 +60,7 @@ export function UserFactory(sequelize: Sequelize): typeof User {
       sequelize,
       tableName: 'users',
       modelName: 'User',
-      timestamps: false,
+      timestamps: true, // Enable timestamps
       underscored: true,
       freezeTableName: true,
       hooks: {
