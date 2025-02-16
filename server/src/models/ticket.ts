@@ -1,26 +1,30 @@
 import { DataTypes, Sequelize, Model, Optional } from 'sequelize';
 
+// Define the attributes for the Ticket model
 interface TicketAttributes {
   id: number;
-  name: string;
-  status: 'todo' | 'in-progress' | 'done';
+  title: string;
   description: string;
-  assignedUserId: number | null;
+  status: string;
+  assignedUserId?: number; 
 }
 
+// Define the creation attributes for the Ticket model
 interface TicketCreationAttributes extends Optional<TicketAttributes, 'id'> {}
 
+// Define the Ticket model class
 export class Ticket extends Model<TicketAttributes, TicketCreationAttributes> implements TicketAttributes {
   public id!: number;
-  public name!: string;
-  public status!: 'todo' | 'in-progress' | 'done';
+  public title!: string;
   public description!: string;
-  public assignedUserId!: number | null;
+  public status!: string;
+  public assignedUserId?: number;
 
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
 }
 
+// Function to initialize the Ticket model
 export function TicketFactory(sequelize: Sequelize): typeof Ticket {
   Ticket.init(
     {
@@ -29,15 +33,15 @@ export function TicketFactory(sequelize: Sequelize): typeof Ticket {
         autoIncrement: true,
         primaryKey: true,
       },
-      name: {
+      title: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      description: {
         type: DataTypes.STRING,
         allowNull: false,
       },
       status: {
-        type: DataTypes.ENUM('todo', 'in-progress', 'done'),
-        allowNull: false,
-      },
-      description: {
         type: DataTypes.STRING,
         allowNull: false,
       },
@@ -47,8 +51,12 @@ export function TicketFactory(sequelize: Sequelize): typeof Ticket {
       },
     },
     {
-      tableName: 'tickets',
       sequelize,
+      tableName: 'tickets',
+      modelName: 'Ticket',
+      timestamps: false,
+      underscored: true,
+      freezeTableName: true,
     }
   );
 

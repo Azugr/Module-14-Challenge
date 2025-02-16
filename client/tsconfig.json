@@ -1,9 +1,15 @@
 {
-  "extends": "../tsconfig.json",
   "compilerOptions": {
+    "target": "es6",
+    "module": "commonjs",
     "rootDir": "src",
     "outDir": "dist",
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "types": ["node"]
   },
   "include": ["src/**/*"],
   "exclude": [

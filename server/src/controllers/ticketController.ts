@@ -24,33 +24,44 @@ export const getTicketById = async (req: Request, res: Response) => {
     }
 };
 
-export const createTicket = async (req: Request, res: Response) => {
-    const { name, status, description, assignedUserId } = req.body;
-
+export const createTicket = async (req: Request, res: Response): Promise<Response> => {
     try {
-        const newTicket = await Ticket.create({ name, status, description, assignedUserId });
-        res.status(201).json(newTicket);
+      const { title, status, description, assignedUserId } = req.body;
+  
+      const newTicket = await Ticket.create({ title, status, description, assignedUserId });
+  
+      return res.status(201).json(newTicket);
     } catch (error) {
-        res.status(400).json({ error: 'Ticket creation failed' });
+      console.error('❌ Ticket creation error:', error);
+      return res.status(500).json({
+        message: 'Server error',
+        error: (error as Error).message,
+      });
     }
-};
+  };
 
-export const updateTicket = async (req: Request, res: Response) => {
-    const { id } = req.params;
-    const { name, status, description, assignedUserId } = req.body;
-
+// Update an existing ticket
+export const updateTicket = async (req: Request, res: Response): Promise<Response> => {
     try {
-        const ticket = await Ticket.findByPk(id);
-        if (!ticket) {
-            return res.status(404).json({ error: 'Ticket not found' });
-        }
-
-        await ticket.update({ name, status, description, assignedUserId });
-        res.status(200).json(ticket);
+      const { id } = req.params;
+      const { title, status, description, assignedUserId } = req.body;
+  
+      const ticket = await Ticket.findByPk(id);
+      if (!ticket) {
+        return res.status(404).json({ message: 'Ticket not found' });
+      }
+  
+      await ticket.update({ title, status, description, assignedUserId });
+  
+      return res.status(200).json(ticket);
     } catch (error) {
-        res.status(400).json({ error: 'Ticket update failed' });
+      console.error('❌ Ticket update error:', error);
+      return res.status(500).json({
+        message: 'Server error',
+        error: (error as Error).message,
+      });
     }
-};
+  };
 
 export const deleteTicket = async (req: Request, res: Response) => {
     const { id } = req.params;

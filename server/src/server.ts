@@ -5,7 +5,9 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { sequelize } from './config/connection.js';
 import routes from './routes/index.js';
-import userRoutes from "./routes/api/userRoutes.js";
+import userRoutes from './routes/api/userRoutes.js'; 
+import authRoutes from './routes/api/authRoutes.js'; 
+import ticketRoutes from './routes/api/ticketRoutes.js'; 
 
 dotenv.config(); 
 
@@ -24,6 +26,7 @@ app.use(cors({
 
 // Parse incoming JSON requests
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 // Resolve the __dirname variable for ES modules
 const __filename = fileURLToPath(import.meta.url);
@@ -35,8 +38,11 @@ app.use(express.static(path.join(__dirname, '../client/dist')));
 // Use the consolidated routes
 app.use('/api', routes); 
 
-// Use the comment routes
-app.use("/api/user", userRoutes);
+// Use the user routes
+app.use('/api/user', userRoutes);
+
+// Use the auth routes
+app.use('/api/auth', authRoutes); // Add the auth routes
 
 // Serve the main HTML file for the root URL
 app.get('*', (req, res) => {
@@ -45,20 +51,17 @@ app.get('*', (req, res) => {
 
 // Ensure database connection and sync models
 sequelize.authenticate()
-  .then(() => {
-    console.log('✅ Connected to the database successfully.');
-    return sequelize.sync(); 
-  })
-  .then(() => {
-    console.log('🚀 Database synced!');
-    
-    // Start the server after database sync
-    app.listen(PORT, () => {
-      console.log(`🔥 Server running on http://localhost:${PORT}`);
+    .then(() => {
+        console.log('✅ Connected to the database successfully.');
+        return sequelize.sync();
+    })
+    .then(() => {
+        console.log('🚀 Database synced!');
+        // Start the server after database sync
+        app.listen(PORT, () => {
+            console.log(`🔥 Server running on http://localhost:${PORT}`);
+        });
+    })
+    .catch((err) => {
+        console.error('❌ Database connection failed:', err);
     });
-  })
-  .catch((err) => {
-    console.error('❌ Database connection failed:', err);
-  });
-
-export default app;

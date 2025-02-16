@@ -48,8 +48,12 @@ export function UserFactory(sequelize: Sequelize): typeof User {
       },
     },
     {
-      tableName: 'users',
       sequelize,
+      tableName: 'users',
+      modelName: 'User',
+      timestamps: false,
+      underscored: true,
+      freezeTableName: true,
       hooks: {
         beforeCreate: async (user: User) => {
           await user.setPassword(user.password);
