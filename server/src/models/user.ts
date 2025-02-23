@@ -1,10 +1,9 @@
 import { DataTypes, Sequelize, Model, Optional } from 'sequelize';
-import * as bcrypt from 'bcryptjs';
+import bcrypt from 'bcrypt';
 
 interface UserAttributes {
   id: number;
   username: string;
-  email: string;
   password: string;
 }
 
@@ -13,13 +12,19 @@ interface UserCreationAttributes extends Optional<UserAttributes, 'id'> {}
 export class User extends Model<UserAttributes, UserCreationAttributes> implements UserAttributes {
   public id!: number;
   public username!: string;
-  public email!: string;
   public password!: string;
 
-  // Hash the password before saving the user
+  public readonly createdAt!: Date;
+  public readonly updatedAt!: Date;
+
+
   public async setPassword(password: string) {
     const saltRounds = 10;
     this.password = await bcrypt.hash(password, saltRounds);
+  }
+
+  public checkPassword(loginPw: string): boolean {
+    return bcrypt.compareSync(loginPw, this.password);
   }
 }
 
@@ -30,15 +35,11 @@ export function UserFactory(sequelize: Sequelize): typeof User {
         type: DataTypes.INTEGER,
         autoIncrement: true,
         primaryKey: true,
+        allowNull: false,
       },
       username: {
         type: DataTypes.STRING,
         allowNull: false,
-      },
-      email: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        unique: true,
       },
       password: {
         type: DataTypes.STRING,
@@ -46,22 +47,20 @@ export function UserFactory(sequelize: Sequelize): typeof User {
       },
     },
     {
-      sequelize,
       tableName: 'users',
-      modelName: 'User',
-      timestamps: false, 
-      underscored: true,
-      freezeTableName: true,
+      sequelize,
       hooks: {
         beforeCreate: async (user: User) => {
           await user.setPassword(user.password);
         },
         beforeUpdate: async (user: User) => {
-          if (user.changed('password')) {
-            await user.setPassword(user.password);
-          }
+          await user.setPassword(user.password);
         },
       },
+      timestamps: false,
+      freezeTableName: true,
+      underscored: true,
+      modelName: 'user',
     }
   );
 

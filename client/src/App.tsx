@@ -1,21 +1,17 @@
-import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import KanbanBoard from './components/KanbanBoard';
-import LoginPage from './components/LoginPage';
-import NotFound from './components/NotFound';
+import { Outlet } from 'react-router-dom';
 
-const App: React.FC = () => {
+import Navbar from './components/NavBar.js';
+
+function App() {
+
   return (
-    <Router>
-      <div>
-        <Routes>
-          <Route path="/" element={<LoginPage />} />
-          <Route path="/kanban" element={<KanbanBoard />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </div>
-    </Router>
-  );
-};
+    <div className='container'>
+      <Navbar />
+      <main>
+        <Outlet />
+      </main>
+    </div>
+  )
+}
 
-export default App;
+export default App

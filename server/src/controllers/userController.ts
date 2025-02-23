@@ -1,31 +1,77 @@
 import { Request, Response } from 'express';
 import { User } from '../models/user.js';
-import * as bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken';
-import dotenv from 'dotenv';
 
-dotenv.config();
-
-const JWT_SECRET = process.env.JWT_SECRET_KEY || 'your_secret_key';
-
-export const loginUser = async (req: Request, res: Response) => {
-    const { username, password } = req.body;
-
-    try {
-        const user = await User.findOne({ where: { username } });
-        if (!user) {
-            return res.status(400).json({ error: 'Invalid username or password' });
-        }
-
-        const isPasswordValid = await bcrypt.compare(password, user.password);
-        if (!isPasswordValid) {
-            return res.status(400).json({ error: 'Invalid username or password' });
-        }
-
-        const token = jwt.sign({ id: user.id }, JWT_SECRET, { expiresIn: '1h' });
-        return res.json({ token });
-    } catch (error) {
-        return res.status(500).json({ error: 'Login failed' });
-    }
+// GET all users
+export const getAllUsers = async (_req: Request, res: Response) => {
+  try {
+    const users = await User.findAll({
+      attributes: { exclude: ['password'] }
+    });
+    res.json(users);
+  } catch (error: any) {
+    res.status(500).json({ message: error.message });
+  }
 };
 
+// GET users by Id
+export const getUserById = async (req: Request, res: Response) => {
+  const { id } = req.params;
+  try {
+    const user = await User.findByPk(id, {
+      attributes: { exclude: ['password'] }
+    });
+    if (user) {
+      res.json(user);
+    } else {
+      res.status(404).json({ message: 'User not found' });
+    }
+  } catch (error: any) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+// CREATE users
+export const createUser = async (req: Request, res: Response) => {
+  const { username, password } = req.body;
+  try {
+    const newUser = await User.create({ username, password });
+    res.status(201).json(newUser);
+  } catch (error: any) {
+    res.status(400).json({ message: error.message });
+  }
+};
+
+// UPDATE users
+export const updateUser = async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const { username, password } = req.body;
+  try {
+    const user = await User.findByPk(id);
+    if (user) {
+      user.username = username;
+      user.password = password;
+      await user.save();
+      res.json(user);
+    } else {
+      res.status(404).json({ message: 'User not found' });
+    }
+  } catch (error: any) {
+    res.status(400).json({ message: error.message });
+  }
+};
+
+// DELETE Users
+export const deleteUser = async (req: Request, res: Response) => {
+  const { id } = req.params;
+  try {
+    const user = await User.findByPk(id);
+    if (user) {
+      await user.destroy();
+      res.json({ message: 'User deleted' });
+    } else {
+      res.status(404).json({ message: 'User not found' });
+    }
+  } catch (error: any) {
+    res.status(500).json({ message: error.message });
+  }
+};

@@ -1,22 +1,12 @@
-import express from 'express';
-import userRouter from './api/userRoutes.js';
-import ticketRouter from './api/ticketRoutes.js';
-import authRoutes from './api/authRoutes.js';
-import seedRoutes from './api/seedRoutes.js'; 
-import authenticateToken from '../middleware/auth.js';
+import { Router } from 'express';
+import authRoutes from './authRoutes.js';
+import apiRoutes from './api/index.js';
+import { authenticateToken } from '../middleware/auth.js';
 
-const router = express.Router();
+const router = Router();
 
-// Add auth routes without authentication middleware
 router.use('/auth', authRoutes);
-
-// Apply authentication middleware only to /users routes
-router.use('/users', authenticateToken, userRouter);
-
-// No authentication middleware for /tickets routes
-router.use('/tickets', ticketRouter);
-
-// Add seed routes
-router.use('/seeds', seedRoutes);
+// TODO: Add authentication to the API routes
+router.use('/api', authenticateToken, apiRoutes);
 
 export default router;

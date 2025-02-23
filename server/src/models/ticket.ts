@@ -1,30 +1,30 @@
 import { DataTypes, Sequelize, Model, Optional } from 'sequelize';
+import { User } from './user';
 
-// Define the attributes for the Ticket model
 interface TicketAttributes {
   id: number;
   title: string;
-  description: string;
   status: string;
-  assignedUserId?: number; 
+  description: string;
+  assignedUserId?: number;
 }
 
-// Define the creation attributes for the Ticket model
 interface TicketCreationAttributes extends Optional<TicketAttributes, 'id'> {}
 
-// Define the Ticket model class
 export class Ticket extends Model<TicketAttributes, TicketCreationAttributes> implements TicketAttributes {
   public id!: number;
   public title!: string;
-  public description!: string;
   public status!: string;
-  public assignedUserId?: number;
+  public description!: string;
+  public assignedUserId!: number;
+
+  // associated User model
+  public readonly assignedUser?: User;
 
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
 }
 
-// Function to initialize the Ticket model
 export function TicketFactory(sequelize: Sequelize): typeof Ticket {
   Ticket.init(
     {
@@ -37,11 +37,11 @@ export function TicketFactory(sequelize: Sequelize): typeof Ticket {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      description: {
+      status: {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      status: {
+      description: {
         type: DataTypes.STRING,
         allowNull: false,
       },
@@ -51,12 +51,8 @@ export function TicketFactory(sequelize: Sequelize): typeof Ticket {
       },
     },
     {
-      sequelize,
       tableName: 'tickets',
-      modelName: 'Ticket',
-      timestamps: false,
-      underscored: true,
-      freezeTableName: true,
+      sequelize,
     }
   );
 

@@ -2,8 +2,10 @@ import { Ticket } from '../models/ticket.js';
 
 export const seedTickets = async () => {
   await Ticket.bulkCreate([
-    { title: 'Design landing page', status: 'in-progress', description: 'Create wireframes and mockups for the landing page.', assignedUserId: 1 },
-    { title: 'Develop API', status: 'to-do', description: 'Develop the REST API for the application.', assignedUserId: 2 },
-    { title: 'Set up database', status: 'done', description: 'Set up the PostgreSQL database for the application.', assignedUserId: 3 },
+    { title: 'Create Homepage Layout', status: 'in-progress', description: 'Develop initial sketches and design prototypes for the homepage.', assignedUserId: 1 },
+    { title: 'Configure Repository', status: 'completed', description: 'Establish a new GitHub repository and include an introductory README.', assignedUserId: 2 },
+    { title: 'Build Authentication System', status: 'to-do', description: 'Create a secure login mechanism using token-based authentication.', assignedUserId: 1 },
+    { title: 'Validate API Endpoints', status: 'to-do', description: 'Perform comprehensive testing on API endpoints to ensure reliability.', assignedUserId: 1 },
+    { title: 'Launch Application', status: 'to-do', description: 'Deploy the final version of the application to the production environment.', assignedUserId: 2 },
   ]);
 };

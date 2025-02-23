@@ -27,3 +27,12 @@ export const getToken = (): string | null => {
   export const logout = (): void => {
     localStorage.removeItem('token');
   };
+
+  
+// Default export
+export default {
+  getToken,
+  isAuthenticated,
+  getCurrentUser,
+  logout
+};
