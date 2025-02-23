@@ -1,4 +1,4 @@
-import bcrypt from 'bcryptjs';
+import bcryptjs from 'bcryptjs';
 import { User } from '../models/user.js';
 
 const users = [
@@ -11,7 +11,7 @@ export const seedUsers = async () => {
   try {
     // Hash each user's password before creating
     const hashedUsers = await Promise.all(users.map(async (user) => {
-      const hashedPassword = await bcrypt.hash(user.password, 10);
+      const hashedPassword = await bcryptjs.hash(user.password, 10);
       return { email: user.email, username: user.username, password: hashedPassword };
     }));
 

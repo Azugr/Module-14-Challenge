@@ -1,24 +1,19 @@
-import axios from 'axios';
-import { LoginCredentials, AuthResponse } from '../interfaces/interfaces';
+import { UserLogin } from "../interfaces/UserLogin";
 
-const API_URL = 'http://localhost:5001/api/auth';
+const login = async (userInfo: UserLogin) => {
+  // TODO: make a POST request to the login route
+  const res = await fetch('/auth/login', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(userInfo)
+  });
 
-export const login = async (username: string, password: string): Promise<AuthResponse> => {
-  try {
-    const response = await axios.post<AuthResponse>(`${API_URL}/login`, { username, password });
-    if (response.data.token) {
-      localStorage.setItem('token', response.data.token);
-    }
-    return response.data;
-  } catch (error) {
-    throw new Error('Invalid username or password');
-  }
-};
+  const user = await res.json();
+  return user;
+}
 
-export const logout = () => {
-  localStorage.removeItem('token');
-};
 
-export const getToken = () => {
-  return localStorage.getItem('token');
-};
+
+export { login };

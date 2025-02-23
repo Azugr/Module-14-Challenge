@@ -1,28 +1,28 @@
-import express, { Request, Response } from 'express';
+import express, { Request, Response } from 'express'
 import dotenv from 'dotenv';
 import bcryptjs from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { User } from '../../config/connection.js';  
-import { body, validationResult } from 'express-validator';
 
 dotenv.config();
 
 const router = express.Router();
+//const expressValidator = validator();
 
 // **Login Route**
 router.post(
-  '/login',
-  [
-    body('email').isEmail().withMessage('Please enter a valid email'),
-    body('password').notEmpty().withMessage('Password is required'),
-  ],
+'/login',
+ // [
+   // validator({check})'email').isEmail().withMessage('Please enter a valid email'),
+ //   check('password').notEmpty().withMessage('Password is required'),
+//  ],
   async (req: Request, res: Response): Promise<Response> => {
     console.log('🟢 Login Request:', req.body);
 
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
-    }
+   // const errors = validationResult(req);
+    //if (!errors.isEmpty()) {
+   //   return res.status(400).json({ errors: errors.array() });
+    //}
 
     try {
       const { email, password } = req.body;

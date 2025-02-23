@@ -8,7 +8,7 @@ interface Task {
   status: 'todo' | 'in-progress' | 'done';
 }
 
-const KanbanBoard: React.FunctionComponent = () => {
+const KanbanBoard: React.FC = () => {
   const [tasks, setTasks] = useState<Task[]>([]);
   const navigate = useNavigate();
 
