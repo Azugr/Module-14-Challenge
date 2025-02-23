@@ -53,6 +53,10 @@ export function TicketFactory(sequelize: Sequelize): typeof Ticket {
     {
       tableName: 'tickets',
       sequelize,
+      timestamps: false,
+      freezeTableName: true,
+      underscored: true,
+      modelName: 'ticket',
     }
   );
 

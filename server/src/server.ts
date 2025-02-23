@@ -41,11 +41,12 @@ sequelize.authenticate()
   })
   .then(() => {
     console.log('🚀 Database synced!');
-    // Start the server after database sync
-    app.listen(PORT, () => {
-      console.log(`🔥 Server running on http://localhost:${PORT}`);
-    });
-  })
+
+// Start the server after database sync
+  app.listen(PORT, () => {
+    console.log(`🔥 Server running on http://localhost:${PORT}`);
+  });
+})
   .catch((err) => {
     console.error('❌ Database connection failed:', err);
   });
