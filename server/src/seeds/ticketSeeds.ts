@@ -1,6 +1,6 @@
 import { Ticket } from '../models/ticket.js';
 
-export const seedTickets = async () => {
+export const ticketSeeds = async () => {
   await Ticket.bulkCreate([
     { title: 'Create Homepage Layout', status: 'in-progress', description: 'Develop initial sketches and design prototypes for the homepage.', assignedUserId: 1 },
     { title: 'Configure Repository', status: 'completed', description: 'Establish a new GitHub repository and include an introductory README.', assignedUserId: 2 },

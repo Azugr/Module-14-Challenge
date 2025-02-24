@@ -8,6 +8,11 @@ export const getToken = (): string | null => {
     const token = getToken();
     return !!token;
   };
+
+  // Function to check if the user is logged in (alias for isAuthenticated)
+  export const loggedIn = (): boolean => {
+      return isAuthenticated();
+  };
   
   // Function to get the current user from the token (assuming the token is a JWT)
   export const getCurrentUser = (): any | null => {
@@ -28,11 +33,18 @@ export const getToken = (): string | null => {
     localStorage.removeItem('token');
   };
 
+  // Function to log in the user
+  export const login = (token: string): void => {
+    localStorage.setItem('token', token);
+  };
+
   
 // Default export
 export default {
   getToken,
   isAuthenticated,
+  loggedIn,
   getCurrentUser,
-  logout
+  logout, 
+  login
 };

@@ -1,16 +1,16 @@
-import { seedUsers } from './userSeeds.js';
-import { seedTickets } from './ticketSeeds.js';
-import { sequelize } from '../models/index.js';
+import userSeeds from './userSeeds.js';
+import { ticketSeeds } from './ticketSeeds.js';
+import { sequelize } from '../config/connection.js';
 
 const seedAll = async (): Promise<void> => {
   try {
     await sequelize.sync({ force: true });
     console.log('\n----- DATABASE SYNCED -----\n');
     
-    await seedUsers();
+    await userSeeds();
     console.log('\n----- USERS SEEDED -----\n');
     
-    await seedTickets();
+    await ticketSeeds();
     console.log('\n----- TICKETS SEEDED -----\n');
     
     process.exit(0);

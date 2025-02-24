@@ -2,8 +2,10 @@ import dotenv from 'dotenv';
 import express from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { sequelize } from './models/index.js';
+import { sequelize } from './config/connection.js';
 import routes from './routes/index.js';
+import userSeeds from './seeds/userSeeds.js';
+
 
 dotenv.config();
 
@@ -39,14 +41,18 @@ sequelize.authenticate()
     console.log('✅ Connected to the database successfully.');
     return sequelize.sync({ force: forceDatabaseRefresh });
   })
-  .then(() => {
+  .then(async () => {
     console.log('🚀 Database synced!');
 
-// Start the server after database sync
-  app.listen(PORT, () => {
-    console.log(`🔥 Server running on http://localhost:${PORT}`);
-  });
-})
+    // Seed the database
+    await userSeeds(); // Call the seed function here
+    console.log('🌱 Database seeded!');
+
+    // Start the server after database sync and seeding
+    app.listen(PORT, () => {
+      console.log(`🔥 Server running on http://localhost:${PORT}`);
+    });
+  })
   .catch((err) => {
     console.error('❌ Database connection failed:', err);
   });

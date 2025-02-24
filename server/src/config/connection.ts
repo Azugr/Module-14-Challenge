@@ -1,7 +1,7 @@
+
 import { Sequelize } from 'sequelize';
-import dotenv from 'dotenv';
-import { UserFactory } from '../models/user.js';
-import { TicketFactory } from '../models/ticket.js';
+import * as dotenv from 'dotenv';
+
 
 dotenv.config();
 
@@ -27,10 +27,6 @@ const sequelize = process.env.DATABASE_URL
       },
     });
 
-// **Initialize Models**
-const User = UserFactory(sequelize);
-const Ticket = TicketFactory(sequelize);
-
 // **Test Database Connection Before Syncing**
 sequelize
   .authenticate()
@@ -49,5 +45,4 @@ sequelize
     process.exit(1);  // Exit if sync fails
   });
 
-// **Export models along with Sequelize**
-export { sequelize, User, Ticket };
+export { sequelize };

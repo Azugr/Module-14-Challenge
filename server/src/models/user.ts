@@ -1,5 +1,5 @@
 import { DataTypes, Sequelize, Model, Optional } from 'sequelize';
-import bcrypt from 'bcrypt';
+import * as bcrypt from 'bcrypt';
 
 interface UserAttributes {
   id: number;
@@ -16,7 +16,6 @@ export class User extends Model<UserAttributes, UserCreationAttributes> implemen
 
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
-
 
   public async setPassword(password: string) {
     const saltRounds = 10;
@@ -51,16 +50,14 @@ export function UserFactory(sequelize: Sequelize): typeof User {
       sequelize,
       hooks: {
         beforeCreate: async (user: User) => {
+          console.log('Before create hook:', user);
           await user.setPassword(user.password);
         },
         beforeUpdate: async (user: User) => {
+          console.log('Before update hook:', user);
           await user.setPassword(user.password);
         },
       },
-      timestamps: false,
-      freezeTableName: true,
-      underscored: true,
-      modelName: 'user',
     }
   );
 

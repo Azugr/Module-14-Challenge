@@ -1,9 +1,8 @@
 import { UserLogin } from "../interfaces/UserLogin.js";
 
 const login = async (userInfo: UserLogin) => {
-  
-  // Make a POST request to the login route
-  const res = await fetch('/auth/login', {
+  // Use the environment variable for the API base URL
+  const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/auth/login`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -11,10 +10,12 @@ const login = async (userInfo: UserLogin) => {
     body: JSON.stringify(userInfo)
   });
 
+  if (!res.ok) {
+    throw new Error('Failed to login');
+  }
+
   const user = await res.json();
   return user;
-}
-
-
+};
 
 export { login };
