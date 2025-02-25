@@ -4,7 +4,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { sequelize } from './config/connection.js';
 import routes from './routes/index.js';
-import userSeeds from './seeds/userSeeds.js';
+//import userSeeds from './seeds/userSeeds.js';
 
 
 dotenv.config();
@@ -36,18 +36,10 @@ app.get('*', (_req, res) => {
 });
 
 // Ensure database connection and sync models
-sequelize.authenticate()
-  .then(() => {
-    console.log('✅ Connected to the database successfully.');
-    return sequelize.sync({ force: forceDatabaseRefresh });
-  })
+//sequelize.authenticate()
+
+sequelize.sync({ force: forceDatabaseRefresh })
   .then(async () => {
-    console.log('🚀 Database synced!');
-
-    // Seed the database
-    await userSeeds(); // Call the seed function here
-    console.log('🌱 Database seeded!');
-
     // Start the server after database sync and seeding
     app.listen(PORT, () => {
       console.log(`🔥 Server running on http://localhost:${PORT}`);

@@ -21,13 +21,14 @@ const sequelize = process.env.DATABASE_URL
   : new Sequelize(process.env.DB_NAME || '', process.env.DB_USER || '', process.env.DB_PASSWORD, {
       host: process.env.DB_HOST || 'localhost',
       dialect: 'postgres',
-      port: parseInt(process.env.DB_PORT || '5432', 10),
+     // port: parseInt(process.env.DB_PORT || '5432', 10),
       dialectOptions: {
         ssl: process.env.DB_SSL === 'true' ? { require: true, rejectUnauthorized: false } : false,
       },
     });
 
 // **Test Database Connection Before Syncing**
+/*
 sequelize
   .authenticate()
   .then(() => console.log('✅ Connected to database:', process.env.DATABASE_URL || process.env.DB_NAME))
@@ -35,8 +36,9 @@ sequelize
     console.error('❌ Database connection failed:', err);
     process.exit(1);  // Exit if connection fails
   });
-
+*/
 // **Sync Database**
+/*
 sequelize
   .sync()
   .then(() => console.log('🚀 Database synced!'))
@@ -44,5 +46,6 @@ sequelize
     console.error('❌ Database sync failed:', err);
     process.exit(1);  // Exit if sync fails
   });
+  */
 
 export { sequelize };
