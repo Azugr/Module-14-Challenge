@@ -131,11 +131,29 @@ tbody tr:nth-child(odd) {
 }
 
 .board {
-  width: 100%;
+  display: flex;
+  justify-content: center; /* Center the board */
+  align-items: flex-start; /* Align columns to the top */
+  gap: 20px; /* Adds spacing between columns */
+  width: 90%; /* Ensures it does not take full width */
+  max-width: 1400px; /* Prevents it from getting too wide */
+  margin: 0 auto; /* Centers the board */
 }
 
 .board-display {
   display: flex;
+  justify-content: space-between; /* Distributes columns evenly */
+  width: 100%;
+}
+
+.swim-lane {
+  flex: 1; /* Makes columns take equal space */
+  min-width: 350px; /* Ensures they are not too narrow */
+  max-width: 500px; /* Prevents them from getting too wide */
+  height: 90vh;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  margin: 5px;
+  padding: 10px;
 }
 
 .swim-lane {

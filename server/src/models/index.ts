@@ -10,4 +10,4 @@ const Ticket = TicketFactory(sequelize);
 User.hasMany(Ticket, { foreignKey: 'assignedUserId' });
 Ticket.belongsTo(User, { foreignKey: 'assignedUserId', as: 'assignedUser'});
 
-export { User, Ticket };
+export { sequelize, User, Ticket };
