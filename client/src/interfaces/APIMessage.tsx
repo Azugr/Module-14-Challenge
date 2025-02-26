@@ -1,3 +1,3 @@
-export interface ApiMessage {
+export interface APIMessage {
     message: string;
   }

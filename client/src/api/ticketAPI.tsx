@@ -1,5 +1,5 @@
 import { TicketData } from '../interfaces/TicketData.js';
-import { ApiMessage } from '../interfaces/ApiMessage.js';
+import { APIMessage } from '../interfaces/APIMessage.js';
 import Auth from '../utils/auth';
 
 const retrieveTickets = async () => {
@@ -102,7 +102,7 @@ const updateTicket = async (ticketId: number, body: TicketData): Promise<TicketD
   }
 };
 
-const deleteTicket = async (ticketId: number): Promise<ApiMessage> => {
+const deleteTicket = async (ticketId: number): Promise<APIMessage> => {
   try {
     const response = await fetch(
       `/api/tickets/${ticketId}`, {
