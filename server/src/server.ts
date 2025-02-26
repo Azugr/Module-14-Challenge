@@ -4,9 +4,6 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { sequelize } from './config/connection.js';
 import routes from './routes/index.js';
-//import userSeeds from './seeds/userSeeds.js';
-//import userSeeds from './seeds/userSeeds.js';
-
 
 dotenv.config();
 

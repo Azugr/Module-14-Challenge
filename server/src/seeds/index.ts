@@ -1,21 +1,21 @@
+import { sequelize } from '../models';
 import userSeeds from './userSeeds.js';
 import { ticketSeeds } from './ticketSeeds.js';
-import { sequelize } from '../config/connection.js';
 
-const seedAll = async (): Promise<void> => {
+const seedAll = async () => {
   try {
-    await sequelize.sync({ force: true });
-    console.log('\n----- DATABASE SYNCED -----\n');
-    
+    await sequelize.sync({ force: true }); 
+    console.log("----- DATABASE SYNCED -----");
+
     await userSeeds();
-    console.log('\n----- USERS SEEDED -----\n');
-    
+    console.log("----- USERS SEEDED -----");
+
     await ticketSeeds();
-    console.log('\n----- TICKETS SEEDED -----\n');
-    
+    console.log("----- TICKETS SEEDED -----");
+
     process.exit(0);
-  } catch (error) {
-    console.error('Error seeding database:', error);
+  } catch (err) {
+    console.error("🚨 Error seeding database:", err);
     process.exit(1);
   }
 };
