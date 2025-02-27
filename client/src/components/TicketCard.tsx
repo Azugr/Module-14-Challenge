@@ -22,8 +22,9 @@ const TicketCard = ({ ticket, deleteTicket }: TicketCardProps) => {
   return (
     <div className="ticket-card">
       <h3>{ticket.name || 'No Title'}</h3>
-      <p>{ticket.description || 'No Description'}</p>
       <p><strong>Status:</strong> {ticket.status || 'Unknown'}</p>
+      <p>{ticket.description || 'No Description'}</p>
+      
       {ticket.id !== undefined && ticket.id !== null && (
         <>
           <Link to="/edit" state={{ id: ticket.id }} className="editBtn">

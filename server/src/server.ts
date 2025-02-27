@@ -4,6 +4,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { sequelize } from './config/connection.js';
 import routes from './routes/index.js';
+import cors from 'cors';
 
 dotenv.config();
 
@@ -17,6 +18,9 @@ const forceDatabaseRefresh = false;
 // Resolve the __dirname variable for ES modules
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+
+// Use CORS middleware
+app.use(cors());
 
 // Middleware to parse incoming JSON requests
 app.use(express.json());

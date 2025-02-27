@@ -73,8 +73,6 @@ const createTicket = async (body: TicketData): Promise<TicketData> => {
     const data = await response.json();
     console.log("✅ Ticket successfully created:", data);
 
-    // Optionally, you can remove the refreshBoard call
-    // refreshBoard(); // 🔄 Refresh the board after creation
     return data;
   } catch (err) {
     console.error('❌ Error creating ticket:', err);
