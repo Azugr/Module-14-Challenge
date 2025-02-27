@@ -31,13 +31,13 @@ export const getCurrentUser = (): any | null => {
 // Function to log out the user
 export const logout = (): void => {
   localStorage.removeItem('token');
-  window.location.href = '/login'; // Redirect to login page after logout
+  window.location.href = '/login'; 
 };
 
 // Function to log in the user
 export const login = (token: string): void => {
   localStorage.setItem('token', token);
-  window.location.href = '/'; // Redirect to home page after login
+  window.location.href = '/'; 
 };
 
 // Default export

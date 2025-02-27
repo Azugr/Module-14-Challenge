@@ -1,12 +1,12 @@
 import { Link } from 'react-router-dom';
 
 import { TicketData } from '../interfaces/TicketData.js';
-import { ApiMessage } from '../interfaces/APIMessage.js';
+import { APIMessage } from '../interfaces/APIMessage.js';
 import { MouseEventHandler } from 'react';
 
 interface TicketCardProps {
   ticket: TicketData;
-  deleteTicket: (ticketId: number) => Promise<ApiMessage>
+  deleteTicket: (ticketId: number) => Promise<APIMessage>
 }
 
 const TicketCard = ({ ticket, deleteTicket }: TicketCardProps) => {

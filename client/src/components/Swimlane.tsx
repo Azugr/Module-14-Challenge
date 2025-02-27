@@ -1,11 +1,11 @@
 import TicketCard from './TicketCard.js';
 import { TicketData } from '../interfaces/TicketData.js';
-import { ApiMessage } from '../interfaces/ApiMessage.js';
+import { APIMessage } from '../interfaces/APIMessage.js';
 
 interface SwimlaneProps {
   title: string;
   tickets: TicketData[];
-  deleteTicket: (ticketId: number) => Promise<ApiMessage>
+  deleteTicket: (ticketId: number) => Promise<APIMessage>
 }
 
 const Swimlane = ({ title, tickets, deleteTicket }: SwimlaneProps) => {

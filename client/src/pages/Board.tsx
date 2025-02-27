@@ -5,7 +5,7 @@ import { retrieveTickets, deleteTicket } from '../api/ticketAPI.js';
 import ErrorPage from './ErrorPage.js';
 import Swimlane from '../components/Swimlane.js';
 import { TicketData } from '../interfaces/TicketData.js';
-import { ApiMessage } from '../interfaces/ApiMessage.js';
+import { APIMessage } from '../interfaces/APIMessage.js';
 
 import auth from '../utils/auth';
 
@@ -32,7 +32,7 @@ const Board = () => {
     }
   };
 
-  const deleteIndvTicket = async (ticketId: number) : Promise<ApiMessage> => {
+  const deleteIndvTicket = async (ticketId: number) : Promise<APIMessage> => {
     try {
       const data = await deleteTicket(ticketId);
       fetchTickets();
