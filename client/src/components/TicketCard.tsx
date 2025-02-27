@@ -1,37 +1,42 @@
 import { Link } from 'react-router-dom';
-
 import { TicketData } from '../interfaces/TicketData.js';
 import { APIMessage } from '../interfaces/APIMessage.js';
-import { MouseEventHandler } from 'react';
 
 interface TicketCardProps {
   ticket: TicketData;
-  deleteTicket: (ticketId: number) => Promise<APIMessage>
+  deleteTicket: (ticketId: number) => Promise<APIMessage>;
 }
 
 const TicketCard = ({ ticket, deleteTicket }: TicketCardProps) => {
-
-  const handleDelete: MouseEventHandler<HTMLButtonElement> = async (event) => {
-    const ticketId = Number(event.currentTarget.value);
-    if (!isNaN(ticketId)) {
+  const handleDelete = async () => {
+    if (ticket.id !== undefined && ticket.id !== null) {
       try {
-        const data = await deleteTicket(ticketId);
-        return data;
+        await deleteTicket(ticket.id);
+        console.log(`✅ Ticket ${ticket.id} deleted successfully.`);
       } catch (error) {
-        console.error('Failed to delete ticket:', error);
+        console.error('❌ Failed to delete ticket:', error);
       }
     }
   };
 
   return (
-    <div className='ticket-card'>
-      <h3>{ticket.name}</h3>
-      <p>{ticket.description}</p>
-      <p>{ticket.assignedUser?.username}</p>
-      <Link to='/edit' state={{id: ticket.id}} type='button' className='editBtn'>Edit</Link>
-      <button type='button' value={String(ticket.id)} onClick={handleDelete} className='deleteBtn'>Delete</button>
+    <div className="ticket-card">
+      <h3>{ticket.name || 'No Title'}</h3>
+      <p>{ticket.description || 'No Description'}</p>
+      <p><strong>Status:</strong> {ticket.status || 'Unknown'}</p>
+      {ticket.id !== undefined && ticket.id !== null && (
+        <>
+          <Link to="/edit" state={{ id: ticket.id }} className="editBtn">
+            Edit
+          </Link>
+          <button type="button" onClick={handleDelete} className="deleteBtn">
+            Delete
+          </button>
+        </>
+      )}
     </div>
   );
 };
 
 export default TicketCard;
+

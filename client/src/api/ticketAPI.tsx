@@ -64,12 +64,17 @@ const createTicket = async (body: TicketData): Promise<TicketData> => {
       body: JSON.stringify(body)
     });
 
-    if (!response.ok) throw new Error(`🚨 Invalid API response (${response.status})`);
+    if (!response.ok) {
+      const errorData = await response.json();
+      console.error('Error response data:', errorData);
+      throw new Error(`🚨 Invalid API response (${response.status})`);
+    }
 
     const data = await response.json();
     console.log("✅ Ticket successfully created:", data);
 
-    refreshBoard(); // 🔄 Refresh the board after creation
+    // Optionally, you can remove the refreshBoard call
+    // refreshBoard(); // 🔄 Refresh the board after creation
     return data;
   } catch (err) {
     console.error('❌ Error creating ticket:', err);

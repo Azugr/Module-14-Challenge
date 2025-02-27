@@ -1,10 +1,6 @@
-import { UserData } from './UserData.js';
-
 export interface TicketData {
-  id: number | null;
-  name: string | null;
-  description: string | null;
-  status: string | null;
-  assignedUserId: number | null;
-  assignedUser: UserData | null;
+  id?: number; 
+  name: string;
+  description: string;
+  status: 'Todo' | 'In Progress' | 'Done'; 
 }

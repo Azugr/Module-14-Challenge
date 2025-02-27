@@ -45,9 +45,9 @@ export const getTicketById = async (req: Request, res: Response) => {
 
 // CREATE tickets
 export const createTicket = async (req: Request, res: Response) => {
-  const { name, status, description, assignedUserId } = req.body;
+  const { name, status, description,  } = req.body;
   try {
-    const newTicket = await Ticket.create({ name, status, description, assignedUserId });
+    const newTicket = await Ticket.create({ name, status, description,  });
     res.status(201).json(newTicket);
   } catch (error: any) {
     res.status(400).json({ message: error.message });
@@ -57,14 +57,13 @@ export const createTicket = async (req: Request, res: Response) => {
 // UPDATE tickets
 export const updateTicket = async (req: Request, res: Response) => {
   const { id } = req.params;
-  const { name, status, description, assignedUserId } = req.body;
+  const { name, status, description,  } = req.body;
   try {
     const ticket = await Ticket.findByPk(id);
     if (ticket) {
       ticket.name = name;
       ticket.status = status;
       ticket.description = description;
-      ticket.assignedUserId = assignedUserId;
       await ticket.save();
       res.json(ticket);
     } else {
