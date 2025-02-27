@@ -1,127 +1,118 @@
-# Kanban Board with JWT Authentication
+# Kanban Board Application
 
-## Description
+## 📌 Overview
+This project is a full-stack **Kanban Board Application** built using **React, TypeScript, Express, PostgreSQL, and Sequelize**. It allows users to create, manage, and track tasks efficiently with authentication and role-based access control.
 
-Authentication with JSON Web Tokens (JWTs) is crucial for full-stack applications, as it provides a secure and scalable method for verifying user identities. JWTs are compact, URL-safe tokens that encode a user's authentication data, allowing servers to authenticate requests. Additionally, JWTs can include metadata and be easily verified and decoded, enhancing security while enabling seamless authentication across various parts of an application.
+## 📖 Assignment Acknowledgment
+This project was developed as part of an **assignment for Module 14 of the Bootcamp**. The goal was to implement authentication with JWT, complete the login UI, and integrate authentication on the backend.
 
-This project adds secure authentication to a Kanban board using JWT. Users can log in, manage tasks, and maintain session security. The app includes a React frontend, an Express.js backend with PostgreSQL, and is deployed on Render.
+## 🚀 Features
+- 🔑 **User Authentication**: JWT-based authentication system.
+- 📝 **Task Management**: Users can create, update, and delete tickets.
+- 📋 **Kanban Board Interface**: View tasks categorized by status (Todo, In Progress, Done).
+- 👥 **User Assignment**: Assign tickets to specific users.
+- 📦 **Persistent Storage**: PostgreSQL database using Sequelize ORM.
+- 🌐 **Deployed on Render**: The backend and frontend are deployed and fully functional.
 
-## Features
+## 🎥 Walkthrough Video
+A walkthrough video is included in the submission. It covers:
+- Application setup and features.
+- User authentication flow.
+- Creating and managing tickets on the Kanban board.
+- API testing with Insomnia.
 
-- Secure login and authentication using JWT
-- Task management with Kanban board functionality
-- Protected API routes requiring authentication
-- User session management with automatic logout on inactivity
-- Deployment on Render with PostgreSQL database
-- Full user authentication with role-based access control
+[🔗 Watch the Walkthrough Video](INSERT_VIDEO_LINK_HERE)
 
-## User Story
+## 📜 User Story
 
 **AS A** member of an agile team  
 **I WANT** a Kanban board with a secure login page  
 **SO THAT** I can securely access and manage my work tasks  
 
-## Acceptance Criteria
+## ✅ Acceptance Criteria
 
-- **GIVEN** a Kanban board with a secure login page
-- **WHEN** I load the login page
-  - **THEN** I am presented with form inputs for username and password
-- **WHEN** I enter my valid username and password
-  - **THEN** I am authenticated using JWT and redirected to the main Kanban board page
-- **WHEN** I enter an invalid username or password
-  - **THEN** I am presented with an error message indicating that the credentials are incorrect
-- **WHEN** I successfully log in
-  - **THEN** a JWT is stored securely in the client's local storage for subsequent authenticated requests
-- **WHEN** I log out
-  - **THEN** the JWT is removed from the client's local storage and I am redirected to the login page
-- **WHEN** I try to access the Kanban board page without being authenticated
-  - **THEN** I am redirected to the login page
-- **WHEN** I remain inactive for a defined period
-  - **THEN** my session expires, the JWT is invalidated, and I am redirected to the login page upon my next action
+- **GIVEN** a Kanban board with a secure login page  
+  - **WHEN** I load the login page  
+  - **THEN** I am presented with form inputs for username and password  
+- **WHEN** I enter my valid username and password  
+  - **THEN** I am authenticated using JSON Web Tokens (JWT) and redirected to the main Kanban board page  
+- **WHEN** I enter an invalid username or password  
+  - **THEN** I am presented with an error message indicating that the credentials are incorrect  
+- **WHEN** I successfully log in  
+  - **THEN** a JWT is stored securely in the client's local storage for subsequent authenticated requests  
+- **WHEN** I log out  
+  - **THEN** the JWT is removed from the client's local storage and I am redirected to the login page  
+- **WHEN** I try to access the Kanban board page without being authenticated  
+  - **THEN** I am redirected to the login page  
+- **WHEN** I remain inactive for a defined period  
+  - **THEN** my session expires, the JWT is invalidated, and I am redirected to the login page upon my next action  
 
-## Installation
+## 🛠️ Technologies Used
+- **Frontend**: React, TypeScript, Vite
+- **Backend**: Express.js, Node.js
+- **Database**: PostgreSQL, Sequelize ORM
+- **Authentication**: JWT (JSON Web Token), bcrypt
+- **Deployment**: Render (Backend & Frontend)
 
-1. Clone the repository:
+## 📂 Installation & Setup
+### 1️⃣ Clone the Repository
+```sh
+git clone https://github.com/Azugr/Module-14-Challenge.git
+cd Module-14-Challenge
+```
 
-   ```sh
-   git clone https://github.com/Azugr/Module-14-Challenge.git
-   cd kanban-board-jwt
-   ```
+### 2️⃣ Install Dependencies
+```sh
+npm install
+```
 
-2. Install dependencies:
+### 3️⃣ Setup Environment Variables
+Create a `.env` file in the **server** directory with the following:
+```env
+PORT=3001
+DATABASE_URL=your_postgresql_connection_string
+JWT_SECRET_KEY=your_secret_key
+```
+For the **client**, create a `.env` file with:
+```env
+VITE_API_BASE_URL=http://localhost:3001
+```
 
-   ```sh
-   npm install
-   cd server && npm install
-   cd ../client && npm install
-   ```
+### 4️⃣ Start the Application
+#### Backend:
+```sh
+npm run dev
+```
+#### Frontend:
+```sh
+cd client
+npm run dev
+```
 
-3. Install required JWT dependencies:
+## 🔄 API Endpoints
+### User Routes
+- `POST /api/users/login` - Authenticate a user.
+- `GET /api/users` - Retrieve all users.
 
-   ```sh
-   npm install jsonwebtoken
-   npm install @types/jsonwebtoken --save-dev
-   ```
+### Ticket Routes
+- `GET /api/tickets` - Retrieve all tickets.
+- `POST /api/tickets` - Create a new ticket.
+- `PUT /api/tickets/:id` - Update a ticket.
+- `DELETE /api/tickets/:id` - Delete a ticket.
 
-4. Set up environment variables:
-   Create a `.env` file in the `server/` directory with the following:
+## 🔮 Future Improvements
+- ✅ Drag-and-drop functionality for Kanban board.
+- ✅ Real-time updates using WebSockets.
+- ✅ User roles with different permissions.
+- ✅ Improved error handling and validation.
 
-   ```env
-   DB_USER=your_database_user
-   DB_PASSWORD=your_database_password
-   DB_HOST=your_database_host
-   DB_NAME=your_database_name
-   JWT_SECRET=your_random_secret_key
-   ```
+## 🤝 Contributing
+Pull requests are welcome! For major changes, please open an issue first to discuss what you'd like to change.
 
-5. Start the backend server:
+## 📜 License
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-   ```sh
-   cd server
-   npm start
-   ```
+---
 
-6. Start the frontend:
-
-   ```sh
-   cd client
-   npm start
-   ```
-
-## Usage
-
-- Navigate to the login page and enter valid credentials.
-- Successfully logging in will store a JWT in local storage.
-- Accessing the Kanban board requires authentication.
-- Users are logged out automatically after a period of inactivity.
-
-## Deployment
-
-- The application is deployed on Render.
-- Ensure environment variables are set in Render’s dashboard for the backend.
-
-## Technologies Used
-
-- **Frontend:** React, TypeScript
-- **Backend:** Node.js, Express.js
-- **Database:** PostgreSQL
-- **Authentication:** JSON Web Tokens (JWT)
-- **Deployment:** Render
-
-## Video Demonstration
-
-A walkthrough video demonstrating the application's functionality is available [here](https://your-video-link.com).
-
-## GitHub Repository
-
-The source code for this project can be found on GitHub: [Module-14-Challenge](https://github.com/Azugr/Module-14-Challenge.git).
-
-## License
-
-This project is open-source and available under the MIT License.
-
-## Contributors
-
-- Your Name - [GitHub Profile](https://github.com/Azugr)
-
+**🚀 Happy Coding!**
 
