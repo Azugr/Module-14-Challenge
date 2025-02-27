@@ -5,18 +5,11 @@ import { User } from '../models/user.js';
 // GET all tickets
 export const getAllTickets = async (_req: Request, res: Response) => {
   try {
-    const tickets = await Ticket.findAll({
-      include: [
-        {
-          model: User,
-          as: 'assignedUser', 
-          attributes: ['username'], 
-        },
-      ],
-    });
+    const tickets = await Ticket.findAll(); 
     res.json(tickets);
   } catch (error: any) {
-    res.status(500).json({ message: error.message });
+    console.error('❌ Error retrieving tickets:', error);
+    res.status(500).json({ message: 'Failed to retrieve tickets' });
   }
 };
 

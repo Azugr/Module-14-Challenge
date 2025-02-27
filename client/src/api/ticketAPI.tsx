@@ -64,19 +64,26 @@ const createTicket = async (body: TicketData): Promise<TicketData> => {
       body: JSON.stringify(body)
     });
 
+    // Check if the response is not OK
     if (!response.ok) {
       const errorData = await response.json();
       console.error('Error response data:', errorData);
-      throw new Error(`🚨 Invalid API response (${response.status})`);
+      throw new Error(`🚨 Invalid API response (${response.status}): ${errorData.message || 'Unknown error'}`);
     }
 
     const data = await response.json();
     console.log("✅ Ticket successfully created:", data);
 
+ 
     return data;
   } catch (err) {
     console.error('❌ Error creating ticket:', err);
-    return Promise.reject('Could not create ticket');
+    // Return a more informative error message
+    if (err instanceof Error) {
+      return Promise.reject(`Could not create ticket: ${err.message || 'Unknown error'}`);
+    } else {
+      return Promise.reject('Could not create ticket: Unknown error');
+    }
   }
 };
 

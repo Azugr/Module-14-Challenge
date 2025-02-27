@@ -17,9 +17,9 @@ CREATE TABLE users (
 -- Create tickets table
 CREATE TABLE tickets (
   id SERIAL PRIMARY KEY,
-  title VARCHAR(255) NOT NULL,
-  description TEXT NOT NULL,
+  name VARCHAR(255) NOT NULL,
   status VARCHAR(50) NOT NULL,
+  description TEXT NOT NULL,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );

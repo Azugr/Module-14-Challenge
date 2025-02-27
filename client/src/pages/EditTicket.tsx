@@ -12,8 +12,12 @@ const EditTicket = () => {
 
   const fetchTicket = async (ticketId: TicketData) => {
     try {
-      const data = await retrieveTicket(ticketId.id);
-      setTicket(data);
+      if (ticketId.id !== undefined && ticketId.id !== null) {
+        const data = await retrieveTicket(ticketId.id);
+        setTicket(data);
+      } else {
+        console.error('Invalid ticket ID');
+      }
     } catch (err) {
       console.error('Failed to retrieve ticket:', err);
     }
@@ -25,7 +29,7 @@ const EditTicket = () => {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    if (ticket && ticket.id !== null){
+    if (ticket && typeof ticket.id === 'number'){
       updateTicket(ticket.id, ticket);
       navigate('/');
     }
