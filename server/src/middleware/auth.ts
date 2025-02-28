@@ -5,18 +5,31 @@ interface JwtPayload {
   username: string;
 }
 
-export const authenticateToken = (req: Request, res: Response, next: NextFunction) => {
-
-  const token = req.headers['authorization']?.split(' ')[1] as string;
-  const jwtToken = jwt.decode(token);
-  if (jwtToken) {
-    const secretKey = process.env.JWT_SECRET_KEY || ''; 
-    jwt.verify(token, secretKey, (err, decoded) => {
-      if (err) {
-        return res.sendStatus(403);
-      }
-      req.user = decoded as JwtPayload;
-      return next();
-    })
+// Extend Express Request to include user property
+declare global {
+  namespace Express {
+    interface Request {
+      user?: JwtPayload;
+    }
   }
+}
+
+export const authenticateToken = (req: Request, res: Response, next: NextFunction): void => {
+  const token = req.headers['authorization']?.split(' ')[1];
+
+  if (!token) {
+    res.sendStatus(401);
+    return;
+  }
+
+  const secretKey = process.env.JWT_SECRET_KEY || '';
+
+  jwt.verify(token, secretKey, (err, decoded) => {
+    if (err) {
+      res.sendStatus(403);
+      return;
+    }
+    req.user = decoded as JwtPayload;
+    next();
+  });
 };

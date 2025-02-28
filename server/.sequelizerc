@@ -1,6 +1,0 @@
-{
-  "config": "server/sequelize.js",
-  "models-path": "server/models",
-  "seeders-path": "server/seeders",
-  "migrations-path": "server/migrations"
-}
