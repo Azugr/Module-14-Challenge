@@ -1,13 +1,13 @@
 import { sequelize } from '../models';
-import userSeeds from './userSeeds.js';
+import { seedUsers } from './userSeeds.js';
 import { ticketSeeds } from './ticketSeeds.js';
 
 const seedAll = async () => {
   try {
-    await sequelize.sync({ force: true }); 
+    await sequelize.sync({ force: true });
     console.log("----- DATABASE SYNCED -----");
 
-    await userSeeds();
+    await seedUsers();
     console.log("----- USERS SEEDED -----");
 
     await ticketSeeds();

@@ -10,19 +10,19 @@ import {
 
 const router = express.Router();
 
-// Get all tickets
+// GET /tickets - Get all tickets
 router.get('/', getAllTickets);
 
-// Get a ticket by id
+// GET /tickets/:id - Get a ticket by id
 router.get('/:id', getTicketById);
 
-// Create a new ticket
+// POST /tickets - Create a new ticket
 router.post('/', createTicket);
 
-// Update a ticket
+// PUT /tickets/:id - Update a ticket by id
 router.put('/:id', updateTicket);
 
-// Delete a ticket 
+// DELETE /tickets/:id - Delete a ticket by id
 router.delete('/:id', deleteTicket);
 
 export { router as ticketRoutes };

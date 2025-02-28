@@ -2,44 +2,38 @@ import dotenv from 'dotenv';
 import express from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { sequelize } from './config/connection.js';
+import { sequelize } from './models/index.js';
 import routes from './routes/index.js';
-import cors from 'cors';
 
 dotenv.config();
 
-// Create an instance of the Express application
+// Create an Express server
 const app = express();
 
-// Set the port number from environment variables or default to 3001
+// Set the port for the server
 const PORT = process.env.PORT || 3001;
 const forceDatabaseRefresh = false;
 
-// Resolve the __dirname variable for ES modules
+// Set up __dirname for relative pathing
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Use CORS middleware
-app.use(cors());
-
-// Middleware to parse incoming JSON requests
+// Middleware for JSON and form data parsing
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Serve static files from the client's dist folder
+// Serve the client's static files
 app.use(express.static(path.join(__dirname, '../../client/dist')));
 
-// Use routes
+// Use the API routes
 app.use(routes);
 
-// Serve the main HTML file for the root URL
+// Catch-all route to serve the client's index.html file
 app.get('*', (_req, res) => {
   res.sendFile(path.join(__dirname, '../../client/dist/index.html'));
 });
 
-// Ensure database connection and sync models
-//sequelize.authenticate()
-
+// Sync the database and start the server
 sequelize.sync({ force: forceDatabaseRefresh })
   .then(async () => {
     // Start the server after database sync and seeding

@@ -1,36 +1,44 @@
 import { User } from '../models/user.js';
 import bcrypt from 'bcrypt';
 
-const userData = [
-    {
-        username: 'user1',
-        password: 'password1', 
-    },
-    {
-        username: 'user2',
-        password: 'password2',
-    },
-    {
-      username: 'user3',
-      password: 'password3',
-  },
-    
-];
-
-const userSeeds = async () => {
+export const seedUsers = async () => {
   try {
-    console.log('Seeding users...');
-    const usersWithHashedPasswords = await Promise.all(
-      userData.map(async (user) => {
-        const hashedPassword = await bcrypt.hash(user.password, 10);
-        return { ...user, password: hashedPassword };
-      })
+    const hashedPasswords = await Promise.all([
+      bcrypt.hash('password1', 10),
+      bcrypt.hash('password2', 10),
+      bcrypt.hash('password3', 10),
+      bcrypt.hash('password4', 10),
+      bcrypt.hash('password5', 10),
+    ]);
+
+    await User.bulkCreate(
+      [
+        {
+          username: 'user1',
+          password: hashedPasswords[0],
+        },
+        {
+          username: 'user2',
+          password: hashedPasswords[1],
+        },
+        {
+          username: 'user3',
+          password: hashedPasswords[2],
+        },
+        {
+          username: 'user4',
+          password: hashedPasswords[3],
+        },
+        {
+          username: 'user5',
+          password: hashedPasswords[4],
+        },
+      ],
+      { individualHooks: true }
     );
-    await User.bulkCreate(usersWithHashedPasswords);
-    console.log('Users seeded successfully.');
+
+    console.log('✅ Users seeded successfully');
   } catch (error) {
-    console.error('Error seeding database:', error);
+    console.error('🚨 Error seeding users:', error);
   }
 };
-
-export default userSeeds;

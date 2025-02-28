@@ -1,9 +1,11 @@
 import { Router, Request, Response } from 'express';
-import { User } from '../models/index.js';
+import { User } from '../models/user.js';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 
-export const login = async (req: Request, res: Response) => {
+const router = Router();
+
+const loginHandler = async (req: Request, res: Response) => {
   console.log('🟢 Login Request:', req.body);
   const { username, password } = req.body;
 
@@ -19,10 +21,10 @@ export const login = async (req: Request, res: Response) => {
 
   // Compare the provided password with the stored hashed password
   console.log('🔑 Comparing passwords...');
-  const validPass = await bcrypt.compare(password, user.password);
+  const passwordIsValid = await bcrypt.compare(password, user.password);
 
   // If password is invalid, send an authentication failed response
-  if (!validPass) {
+  if (!passwordIsValid) {
     console.log('❌ Invalid password!');
     return res.status(404).json({ message: `Password is not correct` });
   }
@@ -39,9 +41,6 @@ export const login = async (req: Request, res: Response) => {
   return res.json({ token });  // Send the token as a JSON response
 };
 
-const router = Router();
-
-// POST /login - Login a user
-router.post('/login', login);
+router.post('/login', loginHandler);
 
 export default router;
