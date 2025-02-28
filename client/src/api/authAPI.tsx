@@ -1,8 +1,8 @@
-import { UserLogin } from "../interfaces/UserLogin.js";
+import { UserLogin } from "../interfaces/UserLogin";
 
-const login = async (userInfo: UserLogin) => {
-  // Use the environment variable for the API base URL
-  const res = await fetch(`/auth/login`, {
+export const login = async (userInfo: UserLogin) => {
+  
+  const res = await fetch('/auth/login', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -16,6 +16,4 @@ const login = async (userInfo: UserLogin) => {
 
   const user = await res.json();
   return user;
-};
-
-export { login };
+}
