@@ -1,7 +1,5 @@
-
 import { Sequelize } from 'sequelize';
 import dotenv from 'dotenv';
-
 
 dotenv.config();
 
@@ -22,7 +20,6 @@ const sequelize = process.env.DATABASE_URL
     process.env.DB_PASSWORD || '', {
       host: 'localhost',
       dialect: 'postgres',
-     // port: parseInt(process.env.DB_PORT || '5432', 10),
       dialectOptions: {
 
       },

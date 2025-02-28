@@ -9,8 +9,9 @@ export const getAllTickets = async (_req: Request, res: Response) => {
       include: [
         {
           model: User,
-          as: 'assignedUser', 
-          attributes: ['username'], 
+          as: 'assignedUser',
+          attributes: ['username'],
+        },
       ],
     });
     res.json(tickets);
@@ -27,8 +28,8 @@ export const getTicketById = async (req: Request, res: Response) => {
       include: [
         {
           model: User,
-          as: 'assignedUser', 
-          attributes: ['username'], 
+          as: 'assignedUser',
+          attributes: ['username'],
         },
       ],
     });
