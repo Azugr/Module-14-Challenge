@@ -1,51 +1,41 @@
-// Function to get the token from localStorage
-export const getToken = (): string | null => {
-  return localStorage.getItem('token');
-};
+import { JwtPayload, jwtDecode } from 'jwt-decode';
+import type { UserData } from '../interfaces/UserData';
 
-// Function to check if the user is authenticated
-export const isAuthenticated = (): boolean => {
-  const token = getToken();
-  return !!token;
-};
-
-// Function to check if the user is logged in (alias for isAuthenticated)
-export const loggedIn = (): boolean => {
-  return isAuthenticated();
-};
-
-// Function to get the current user from the token (assuming the token is a JWT)
-export const getCurrentUser = (): any | null => {
-  const token = getToken();
-  if (!token) return null;
-
-  try {
-    const payload = JSON.parse(atob(token.split('.')[1]));
-    return payload.user;
-  } catch (error) {
-    console.error('Error decoding token:', error);
-    return null;
+class AuthService {
+  getProfile() {
+    return jwtDecode<UserData>(this.getToken());
   }
-};
 
-// Function to log out the user
-export const logout = (): void => {
-  localStorage.removeItem('token');
-  window.location.href = '/login'; 
-};
+  loggedIn() {
+    const token = this.getToken();
+    return token;
+  }
+  
+  isTokenExpired(token: string) {
+    try {
+      const decoded = jwtDecode<JwtPayload>(token);
+      if (decoded?.exp && decoded?.exp < Date.now() / 1000) {
+        return true;
+      }
+    } catch (err) {
+      return false;
+    }
+  }
 
-// Function to log in the user
-export const login = (token: string): void => {
-  localStorage.setItem('token', token);
-  window.location.href = '/'; 
-};
+  getToken(): string {
+    const loggedUser = localStorage.getItem('id_token') || '';
+    return loggedUser;
+  }
 
-// Default export
-export default {
-  getToken,
-  isAuthenticated,
-  loggedIn,
-  getCurrentUser,
-  logout,
-  login
-};
+  login(idToken: string) {
+    localStorage.setItem('id_token', idToken);
+    window.location.assign('/'); // Redirect to the board page
+  }
+
+  logout() {
+    localStorage.removeItem('id_token');
+    window.location.assign('/login');
+  }
+}
+
+export default new AuthService();

@@ -8,6 +8,8 @@ const Login = () => {
     password: ''
   });
 
+  const [error, setError] = useState<string | null>(null);
+
   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setLoginData({
@@ -18,11 +20,13 @@ const Login = () => {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
+    setError(null);
     try {
       const data = await login(loginData);
       Auth.login(data.token);
     } catch (err) {
       console.error('Failed to login', err);
+      setError('Failed to login: ' + (err as Error).message);
     }
   };
 
@@ -30,25 +34,25 @@ const Login = () => {
     <div className='container'>
       <form className='form' onSubmit={handleSubmit}>
         <h1>Login</h1>
-        <label >Username</label>
+        {error && <p style={{ color: 'red' }}>{error}</p>}
+        <label>Username</label>
         <input 
           type='text'
           name='username'
           value={loginData.username || ''}
           onChange={handleChange}
         />
-      <label>Password</label>
+        <label>Password</label>
         <input 
           type='password'
           name='password'
           value={loginData.password || ''}
           onChange={handleChange}
         />
-        <button type='submit'>Login</button>
+        <button type='submit'>Submit Form</button>
       </form>
     </div>
-    
-  )
+  );
 };
 
 export default Login;

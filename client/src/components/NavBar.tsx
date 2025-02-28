@@ -1,19 +1,19 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import * as auth from '../utils/auth.js';
+import auth from '../utils/auth.js';
 
 const Navbar = () => {
   const [loginCheck, setLoginCheck] = useState(false);
 
   const checkLogin = () => {
-    if (auth.isAuthenticated()) {
+    if (auth.loggedIn()) {
       setLoginCheck(true);
     }
   };
 
   useEffect(() => {
     checkLogin();
-  }, []);
+  }, []); 
 
   return (
     <div className='nav'>

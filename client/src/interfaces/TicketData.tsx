@@ -1,7 +1,10 @@
+import { UserData } from './UserData';
+
 export interface TicketData {
-  id?: number; 
-  name: string;
-  status: 'Todo' | 'In Progress' | 'Done'; 
-  description: string;
-  
+  id: number | null;
+  name: string | null;
+  description: string | null;
+  status: string | null;
+  assignedUserId: number | null;
+  assignedUser: UserData | null;
 }

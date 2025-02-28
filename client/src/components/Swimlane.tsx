@@ -5,20 +5,20 @@ import { APIMessage } from '../interfaces/APIMessage.js';
 interface SwimlaneProps {
   title: string;
   tickets: TicketData[];
-  deleteTicket: (ticketId: number) => Promise<APIMessage>
+  deleteTicket: (ticketId: number) => Promise<APIMessage>;
 }
 
 const Swimlane = ({ title, tickets, deleteTicket }: SwimlaneProps) => {
   const getStatusClass = (status: string) => {
     switch (status) {
       case 'Todo':
-        return 'swim-lane todo';
+        return 'todo';
       case 'In Progress':
-        return 'swim-lane inprogress';
+        return 'inprogress';
       case 'Done':
-        return 'swim-lane done';
+        return 'done';
       default:
-        return 'swim-lane';
+        return '';
     }
   };
 
