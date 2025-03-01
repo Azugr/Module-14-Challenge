@@ -1,5 +1,4 @@
 import { DataTypes, Sequelize, Model, Optional } from 'sequelize';
-import bcrypt from 'bcrypt';
 
 interface UserAttributes {
   id: number;
@@ -13,19 +12,6 @@ export class User extends Model<UserAttributes, UserCreationAttributes> implemen
   public id!: number;
   public username!: string;
   public password!: string;
-
-  public readonly createdAt!: Date;
-  public readonly updatedAt!: Date;
-
-  // Hash the password before saving the user
-  public async setPassword(password: string) {
-    const saltRounds = 10;
-    this.password = await bcrypt.hash(password, saltRounds);
-  }
-
-  public checkPassword(loginPw: string): boolean {
-    return bcrypt.compareSync(loginPw, this.password);
-  }
 }
 
 export function UserFactory(sequelize: Sequelize): typeof User {
@@ -49,15 +35,7 @@ export function UserFactory(sequelize: Sequelize): typeof User {
     {
       tableName: 'users',
       sequelize,
-      hooks: {
-        beforeCreate: async (user: User) => {
-          await user.setPassword(user.password);
-        },
-        beforeUpdate: async (user: User) => {
-          await user.setPassword(user.password);
-        },
-      },
-      timestamps: false,
+      timestamps: false, 
       freezeTableName: true,
       underscored: true,
       modelName: 'user',

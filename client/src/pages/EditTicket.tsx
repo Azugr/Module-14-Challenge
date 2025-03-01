@@ -1,8 +1,8 @@
 import { useState, useEffect, FormEvent, ChangeEvent } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-import { retrieveTicket, updateTicket } from '../api/ticketAPI.js';
-import { TicketData } from '../interfaces/TicketData.js';
+import { retrieveTicket, updateTicket } from '../api/ticketAPI';
+import { TicketData } from '../interfaces/TicketData';
 
 const EditTicket = () => {
   const [ticket, setTicket] = useState<TicketData | undefined>();
@@ -12,8 +12,12 @@ const EditTicket = () => {
 
   const fetchTicket = async (ticketId: TicketData) => {
     try {
-      const data = await retrieveTicket(ticketId.id);
-      setTicket(data);
+      if (ticketId.id !== undefined) {
+        const data = await retrieveTicket(ticketId.id);
+        setTicket(data);
+      } else {
+        console.error('Ticket ID is undefined.');
+      }
     } catch (err) {
       console.error('Failed to retrieve ticket:', err);
     }
@@ -26,7 +30,11 @@ const EditTicket = () => {
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     if (ticket && ticket.id !== null){
-      updateTicket(ticket.id, ticket);
+      if (ticket.id !== undefined) {
+        updateTicket(ticket.id, ticket);
+      } else {
+        console.error('Ticket ID is undefined.');
+      }
       navigate('/');
     }
     else{

@@ -1,32 +1,46 @@
-const forceDatabaseRefresh = false;
-
 import dotenv from 'dotenv';
-dotenv.config();
-
 import express from 'express';
-//import cors from 'cors';
 import path from 'path';
+import { dirname } from 'path';
+import { fileURLToPath } from 'url';
+import { sequelize } from './config/connection.js';
 import routes from './routes/index.js';
-import authRoutes from './routes/authRoutes.js'; 
-import { sequelize } from './models/index.js';
 
+dotenv.config(); // ✅ Load environment variables
+
+// ✅ Fix: Get __dirname manually
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+// Create an instance of the Express application
 const app = express();
-const PORT = process.env.PORT || 3001;
 
-// Serves static files from the client's dist folder
+// Set the port number from environment variables or default to 3001
+const PORT = process.env.PORT || 3001;
+const forceDatabaseRefresh = false; 
+
+// ✅ Middleware
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+// ✅ Serve static frontend files
 app.use(express.static(path.join(__dirname, '../../client/dist')));
 
-app.use(express.json());
-app.use('/auth', authRoutes); 
+// ✅ Use API routes
 app.use(routes);
 
-// Serve the index.html file for any unknown routes
-app.get('*', (req, res) => {
+// ✅ Serve React frontend for unknown routes
+app.get('*', (_req, res) => {
   res.sendFile(path.join(__dirname, '../../client/dist/index.html'));
 });
 
-sequelize.sync({ force: forceDatabaseRefresh }).then(() => {
-  app.listen(PORT, () => {
-    console.log(`Server is listening on port ${PORT}`);
+// ✅ Sync database and start server
+sequelize.sync({ force: forceDatabaseRefresh })
+  .then(() => {
+    app.listen(PORT, () => {
+      console.log(`🔥 Server running on http://localhost:${PORT}`);
+    });
+  })
+  .catch((err) => {
+    console.error('❌ Database connection failed:', err);
   });
-});

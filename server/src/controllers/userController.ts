@@ -1,11 +1,22 @@
 import { Request, Response } from 'express';
-import { User } from '../models/user.js';
+import { User } from '../models/index.js';
 
-// GET /Users
+// ✅ REGISTER NEW USER (No Password Hashing)
+export const createUser = async (req: Request, res: Response) => {
+  const { username, password } = req.body;
+  try {
+    const newUser = await User.create({ username, password });
+    res.status(201).json(newUser);
+  } catch (error: any) {
+    res.status(400).json({ message: error.message });
+  }
+};
+
+// ✅ GET ALL USERS (Hides Passwords)
 export const getAllUsers = async (_req: Request, res: Response) => {
   try {
     const users = await User.findAll({
-      attributes: { exclude: ['password'] }
+      attributes: { exclude: ['password'] } 
     });
     res.json(users);
   } catch (error: any) {
@@ -13,7 +24,7 @@ export const getAllUsers = async (_req: Request, res: Response) => {
   }
 };
 
-// GET /Users/:id
+// ✅ GET USER BY ID
 export const getUserById = async (req: Request, res: Response) => {
   const { id } = req.params;
   try {
@@ -30,26 +41,15 @@ export const getUserById = async (req: Request, res: Response) => {
   }
 };
 
-// POST /Users
-export const createUser = async (req: Request, res: Response) => {
-  const { username, password } = req.body;
-  try {
-    const newUser = await User.create({ username, password });
-    res.status(201).json(newUser);
-  } catch (error: any) {
-    res.status(400).json({ message: error.message });
-  }
-};
-
-// PUT /Users/:id
+// ✅ UPDATE USER (Allows Partial Updates)
 export const updateUser = async (req: Request, res: Response) => {
   const { id } = req.params;
   const { username, password } = req.body;
   try {
     const user = await User.findByPk(id);
     if (user) {
-      user.username = username;
-      user.password = password;
+      if (username) user.username = username;
+      if (password) user.password = password; 
       await user.save();
       res.json(user);
     } else {
@@ -60,7 +60,7 @@ export const updateUser = async (req: Request, res: Response) => {
   }
 };
 
-// DELETE /Users/:id
+// ✅ DELETE USER
 export const deleteUser = async (req: Request, res: Response) => {
   const { id } = req.params;
   try {

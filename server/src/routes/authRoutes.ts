@@ -1,44 +1,39 @@
 import { Router, Request, Response } from 'express';
 import { User } from '../models/user.js';
-import jwt from 'jsonwebtoken';
-import bcrypt from 'bcrypt';
 
 const router = Router();
 
 const loginHandler = async (req: Request, res: Response) => {
-  console.log('🟢 Login Request:', req.body);
-  const { username, password } = req.body;
+  try {
+    const { username, password } = req.body;
+    console.log("🟢 Step 1: Login request received:", username);
 
-  // Find the user in the database by username
-  console.log('🔍 Searching for user with username:', username);
-  const user = await User.findOne({ where: { username } });
+    // 🔹 Find the user by username
+    const user = await User.findOne({ where: { username } });
 
-  // If user is not found, send an authentication failed response
-  if (!user) {
-    console.log('❌ User not found:', username);
-    return res.status(404).json({ message: `User doesn't exist` });
+    if (!user) {
+      console.log("❌ Step 2: User not found:", username);
+      return res.status(401).json({ message: "Authentication failed" });
+    }
+
+    console.log("✅ Step 3: User found:", user.username);
+
+    // 🔹 Debugging: Log password comparison
+    console.log("🔍 Database password:", user.password);
+    console.log("🔍 Entered password:", password);
+
+    // 🔹 Compare passwords (Plain Text)
+    if (user.password !== password) {
+      console.log("❌ Step 4: Password does not match");
+      return res.status(401).json({ message: "Authentication failed" });
+    }
+
+    console.log("✅ Step 5: Login successful");
+    return res.json({ message: "Login successful", user });
+  } catch (error: any) {
+    console.error("🚨 Step 6: Error during login:", error.message);
+    return res.status(500).json({ message: "Internal server error" });
   }
-
-  // Compare the provided password with the stored hashed password
-  console.log('🔑 Comparing passwords...');
-  const passwordIsValid = await bcrypt.compare(password, user.password);
-
-  // If password is invalid, send an authentication failed response
-  if (!passwordIsValid) {
-    console.log('❌ Invalid password!');
-    return res.status(404).json({ message: `Password is not correct` });
-  }
-
-  // Get the secret key from environment variables
-  const secretKey = process.env.JWT_SECRET_KEY || '';
-
-  // Generate a JWT token for the authenticated user
-  console.log('🔐 Generating JWT token...');
-  // The token will expire in 365 days (1 year) for studying purposes
-  const token = jwt.sign({ username }, secretKey, { expiresIn: '365d' });
-
-  console.log('✅ Login successful! Token generated.');
-  return res.json({ token });  // Send the token as a JSON response
 };
 
 router.post('/login', loginHandler);
