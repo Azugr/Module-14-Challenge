@@ -1,4 +1,10 @@
 import { Request, Response, NextFunction } from 'express';
+
+declare module 'express-serve-static-core' {
+  interface Request {
+    user?: JwtPayload;
+  }
+}
 import jwt from 'jsonwebtoken';
 
 interface JwtPayload {
@@ -6,7 +12,7 @@ interface JwtPayload {
 }
 
 export const authenticateToken = (req: Request, res: Response, next: NextFunction) => {
-  // TODO: verify the token exists and add the user data to the request object
+
   const token = req.headers['authorization']?.split(' ')[1] as string;
   const jwtToken = jwt.decode(token);
   if (jwtToken) {

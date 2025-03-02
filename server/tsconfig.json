@@ -1,10 +1,7 @@
 {
   "extends": "../tsconfig.json",
   "compilerOptions": {
-    /* Modules */
     "rootDir": "src", 
-
-    /* Emit */
     "outDir": "dist" 
   },
   "include": ["src"],
