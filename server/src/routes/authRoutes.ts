@@ -6,38 +6,29 @@ import bcrypt from 'bcrypt';
 const router = Router();
 
 const loginHandler = async (req: Request, res: Response) => {
-  console.log('🟢 Login Request:', req.body);
   const { username, password } = req.body;
 
   // Find the user in the database by username
-  console.log('🔍 Searching for user with username:', username);
   const user = await User.findOne({ where: { username } });
 
   // If user is not found, send an authentication failed response
   if (!user) {
-    console.log('❌ User not found:', username);
-    return res.status(404).json({ message: `User doesn't exist` });
+    return res.status(401).json({ message: 'Authentication failed' });
   }
 
   // Compare the provided password with the stored hashed password
-  console.log('🔑 Comparing passwords...');
   const passwordIsValid = await bcrypt.compare(password, user.password);
 
   // If password is invalid, send an authentication failed response
   if (!passwordIsValid) {
-    console.log('❌ Invalid password!');
-    return res.status(404).json({ message: `Password is not correct` });
+    return res.status(401).json({ message: 'Authentication failed' });
   }
 
   // Get the secret key from environment variables
   const secretKey = process.env.JWT_SECRET_KEY || '';
 
   // Generate a JWT token for the authenticated user
-  console.log('🔐 Generating JWT token...');
-  // The token will expire in 365 days (1 year) for studying purposes
-  const token = jwt.sign({ username }, secretKey, { expiresIn: '365d' });
-
-  console.log('✅ Login successful! Token generated.');
+  const token = jwt.sign({ username }, secretKey, { expiresIn: '1h' });
   return res.json({ token });  // Send the token as a JSON response
 };
 

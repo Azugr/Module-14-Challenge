@@ -1,5 +1,5 @@
 import { JwtPayload, jwtDecode } from 'jwt-decode';
-import type { UserData } from '../interfaces/UserData';
+import type { UserData } from '../interfaces/UserData.js';
 
 class AuthService {
   getProfile() {
@@ -29,7 +29,7 @@ class AuthService {
 
   login(idToken: string) {
     localStorage.setItem('id_token', idToken);
-    window.location.assign('/'); 
+    window.location.assign('/'); // Redirect to the board page
   }
 
   logout() {

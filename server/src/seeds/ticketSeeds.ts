@@ -37,7 +37,5 @@ export const ticketSeeds = async () => {
       description: 'Deploy the final version of the application to the production environment.',
       assignedUserId: 5
     }
-  ], {
-    ignoreDuplicates: true 
-  });
+  ]);
 };

@@ -1,7 +1,7 @@
-import { UserLogin } from "../interfaces/UserLogin";
+import { UserLogin } from "../interfaces/UserLogin.js";
 
 export const login = async (userInfo: UserLogin) => {
-  
+
   const res = await fetch('/auth/login', {
     method: 'POST',
     headers: {

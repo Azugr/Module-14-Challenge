@@ -1,5 +1,4 @@
-import * as express from 'express';
-
+import express from 'express';
 import {
   getAllUsers,
   getUserById,
@@ -10,19 +9,19 @@ import {
 
 const router = express.Router();
 
-// GET all users
+// GET /users - Get all users
 router.get('/', getAllUsers);
 
-// GET a user by id
+// GET /users/:id - Get a user by id
 router.get('/:id', getUserById);
 
-// CREATE a new user
+// POST /users - Create a new user
 router.post('/', createUser);
 
-// UPDATE a user by id
+// PUT /users/:id - Update a user by id
 router.put('/:id', updateUser);
 
-// DELETE a user by id
+// DELETE /users/:id - Delete a user by id
 router.delete('/:id', deleteUser);
 
-export { router as userRoutes };
+export { router as userRouter };

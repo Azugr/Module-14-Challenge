@@ -1,10 +1,12 @@
 import { useEffect, useState, useLayoutEffect } from 'react';
 import { Link } from 'react-router-dom';
+
 import { retrieveTickets, deleteTicket } from '../api/ticketAPI.js';
 import ErrorPage from './ErrorPage.js';
 import Swimlane from '../components/Swimlane.js';
 import { TicketData } from '../interfaces/TicketData.js';
 import { APIMessage } from '../interfaces/APIMessage.js';
+
 import auth from '../utils/auth.js';
 
 const boardStates = ['Todo', 'In Progress', 'Done'];
@@ -15,7 +17,7 @@ const Board = () => {
   const [loginCheck, setLoginCheck] = useState(false);
 
   const checkLogin = () => {
-    if (auth.loggedIn()) {
+    if(auth.loggedIn()) {
       setLoginCheck(true);
     }
   };
@@ -30,22 +32,22 @@ const Board = () => {
     }
   };
 
-  const deleteIndvTicket = async (ticketId: number): Promise<APIMessage> => {
+  const deleteIndvTicket = async (ticketId: number) : Promise<APIMessage> => {
     try {
       const data = await deleteTicket(ticketId);
-      setTickets((prevTickets) => prevTickets.filter(ticket => ticket.id !== ticketId));
+      fetchTickets();
       return data;
     } catch (err) {
       return Promise.reject(err);
     }
-  };
+  }
 
   useLayoutEffect(() => {
     checkLogin();
   }, []);
 
   useEffect(() => {
-    if (loginCheck) {
+    if(loginCheck) {
       fetchTickets();
     }
   }, [loginCheck]);
@@ -56,30 +58,34 @@ const Board = () => {
 
   return (
     <>
-      {!loginCheck ? (
+    {
+      !loginCheck ? (
         <div className='login-notice'>
-          <h1>Login to create & view tickets</h1>
-        </div>
+          <h1>
+            Login to create & view tickets
+          </h1>
+        </div>  
       ) : (
-        <div className='board'>
-          <button type='button' id='create-ticket-link'>
-            <Link to='/create'>New Ticket</Link>
-          </button>
-          <div className='board-display'>
-            {boardStates.map((status) => {
-              const filteredTickets = tickets.filter(ticket => ticket.status === status);
-              return (
-                <Swimlane
-                  title={status}
-                  key={status}
-                  tickets={filteredTickets}
-                  deleteTicket={deleteIndvTicket}
-                />
-              );
-            })}
+          <div className='board'>
+            <button type='button' id='create-ticket-link'>
+              <Link to='/create' >New Ticket</Link>
+            </button>
+            <div className='board-display'>
+              {boardStates.map((status) => {
+                const filteredTickets = tickets.filter(ticket => ticket.status === status);
+                return (
+                  <Swimlane 
+                    title={status} 
+                    key={status} 
+                    tickets={filteredTickets} 
+                    deleteTicket={deleteIndvTicket}
+                  />
+                );
+              })}
+            </div>
           </div>
-        </div>
-      )}
+        )
+    }
     </>
   );
 };

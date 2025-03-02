@@ -5,10 +5,10 @@ import { Sequelize } from 'sequelize';
 import { UserFactory } from './user.js';
 import { TicketFactory } from './ticket.js';
 
-console.log("ENV: ", process.env.DATABASE_URL)
+console.log("ENV: ", process.env.DB_URL)
 
-const sequelize = process.env.DATABASE_URL
-  ? new Sequelize(process.env.DATABASE_URL)
+const sequelize = process.env.DB_URL
+  ? new Sequelize(process.env.DB_URL)
   : new Sequelize(process.env.DB_NAME || '', process.env.DB_USER || '', process.env.DB_PASSWORD, {
       host: 'localhost',
       dialect: 'postgres',
