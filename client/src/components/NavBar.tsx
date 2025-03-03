@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import auth from '../utils/auth.js';
+import auth from '../utils/auth';
 
 const NavBar = () => {
   const [ loginCheck, setLoginCheck ] = useState(false);

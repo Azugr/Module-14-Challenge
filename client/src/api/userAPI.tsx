@@ -1,4 +1,4 @@
-import Auth from '../utils/auth.js';
+import Auth from '../utils/auth';
 
 const retrieveUsers = async () => {
   try {

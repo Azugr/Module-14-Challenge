@@ -1,7 +1,7 @@
 import { Router } from 'express';
-import authRoutes from './authRoutes.js';
-import apiRoutes from './api/index.js';
-import { authenticateToken } from '../middleware/auth.js';
+import authRoutes from './authRoutes';
+import apiRoutes from './api/index';
+import { authenticateToken } from '../middleware/auth';
 
 const router = Router();
 

@@ -3,11 +3,12 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import './index.css';
 
 import App from './App.tsx';
-import Board from './pages/Board.js';
-import ErrorPage from './pages/ErrorPage.js';
-import EditTicket from './pages/EditTicket.js';
-import CreateTicket from './pages/CreateTicket.js';
-import Login from './pages/Login.js';
+
+import Board from './pages/Board';
+import ErrorPage from './pages/ErrorPage';
+import EditTicket from './pages/EditTicket';
+import CreateTicket from './pages/CreateTicket';
+import Login from './pages/Login';
 
 const router = createBrowserRouter([
   {
@@ -31,10 +32,6 @@ const router = createBrowserRouter([
         path: '/login',
         element: <Login />
       },
-    /*  {
-        path: '/board',
-        element: <Board />
-      } */
     ]
   }
 ])

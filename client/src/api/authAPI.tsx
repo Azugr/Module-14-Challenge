@@ -1,4 +1,4 @@
-import { UserLogin } from "../interfaces/UserLogin.js";
+import { UserLogin } from "../interfaces/UserLogin";
 
 export const login = async (userInfo: UserLogin) => {
 
