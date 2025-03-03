@@ -6,4 +6,5 @@ const router = Router();
 
 router.use('/tickets', ticketRoutes);
 router.use('/users', userRoutes);
+
 export default router;
