@@ -10,6 +10,7 @@ import EditTicket from './pages/EditTicket';
 import CreateTicket from './pages/CreateTicket';
 import Login from './pages/Login';
 
+// Define the routes for the application
 const router = createBrowserRouter([
   {
     path: '/',
@@ -19,7 +20,7 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <Board />
-      }, 
+      },
       {
         path: '/edit',
         element: <EditTicket />
@@ -34,9 +35,12 @@ const router = createBrowserRouter([
       },
     ]
   }
-])
+]);
 
+// Get the root element from the HTML
 const rootElement = document.getElementById('root');
+
+// Render the application using ReactDOM
 if (rootElement) {
   ReactDOM.createRoot(rootElement).render(<RouterProvider router={router} />);
 }

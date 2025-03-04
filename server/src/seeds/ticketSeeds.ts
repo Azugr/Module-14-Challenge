@@ -1,9 +1,11 @@
 import { Ticket } from '../models/ticket';
 
+// Function to seed ticket data
 export const ticketSeeds = async () => {
-
+  // Delete all existing tickets
   await Ticket.destroy({ where: {} });
 
+  // Bulk create new tickets
   await Ticket.bulkCreate([
     {
       name: 'Create Homepage Layout',

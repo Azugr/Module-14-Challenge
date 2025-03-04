@@ -12,12 +12,12 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* webkit solution */
+/* Webkit solution */
 ::-webkit-input-placeholder { 
   text-align: right; 
 }
 
-/* mozilla solution */
+/* Mozilla solution */
 input:-moz-placeholder { 
   text-align: right; 
 }
@@ -77,12 +77,12 @@ main {
 
 tr {
   border-radius: 10px;
-  background-color: #003366; /* Dark blue for table rows */
+  background-color: #003366; 
   color: white;
 }
 
 tbody tr:nth-child(odd) {
-  background-color: #00509e; /* Slightly lighter dark blue */
+  background-color: #00509e; 
 }
 
 /* Navbar Content */
@@ -106,7 +106,7 @@ tbody tr:nth-child(odd) {
 }
 
 .nav-title a {
-  color: #007bff; /* Blue accent */
+  color: #007bff; 
 }
 
 .nav-item {
@@ -129,55 +129,51 @@ tbody tr:nth-child(odd) {
   table-layout: fixed;
 }
 
+/* Board Styling */
 .board {
   display: flex;
-  justify-content: center; /* Center the board */
-  align-items: flex-start; /* Align columns to the top */
-  gap: 20px; /* Adds spacing between columns */
-  width: 90%; /* Ensures it does not take full width */
-  max-width: 1400px; /* Prevents it from getting too wide */
-  margin: 0 auto; /* Centers the board */
+  justify-content: center;
+  align-items: flex-start;
+  gap: 20px;
+  width: 90%;
+  max-width: 1400px;
+  margin: 0 auto;
 }
 
 .board-display {
   display: flex;
-  justify-content: space-between; /* Distributes columns evenly */
+  justify-content: space-between;
   width: 100%;
 }
 
+/* Swimlane Styling */
 .swim-lane {
-  flex: 1; /* Makes columns take equal space */
-  min-width: 350px; /* Ensures they are not too narrow */
-  max-width: 500px; /* Prevents them from getting too wide */
+  flex: 1;
+  min-width: 350px;
+  max-width: 500px;
   height: 90vh;
   border: 1px solid rgba(0, 0, 0, 0.2);
   margin: 5px;
   padding: 10px;
-}
-
-.swim-lane {
   text-align: center;
   font-weight: 500;
   width: 33%;
-  height: 90vh; 
-  border: 1px solid rgba(0, 0, 0, 0.2);
-  margin: 5px;
-  padding: 5px;
 }
 
 /* Kanban lane colors in shades of blue */
 .todo {
-  background-color: #cce5ff; /* Light blue */
+  background-color: #cce5ff;
 }
 
 .inprogress {
-  background-color: #66b3ff; /* Medium blue */
+  background-color: #66b3ff;
 }
 
 .done {
-  background-color: #0056b3; /* Dark blue */
+  background-color: #0056b3;
 }
 
+/* Ticket Card Styling */
 .ticket-card {
   text-align: left;
   background-color: #fff;
@@ -197,11 +193,11 @@ tbody tr:nth-child(odd) {
   margin-left: auto;
 }
 
-/* Form styling updated to a blue theme */
+/* Form Styling */
 .form {
   width: 90%;
   height: 80%;
-  background-color: #4a90e2; /* A medium blue */
+  background-color: #4a90e2;
   margin: auto;
   display: flex;
   flex-direction: column;
@@ -216,7 +212,7 @@ tbody tr:nth-child(odd) {
 .form > input {
   width: 200px;
   background-color: #fff;
-  color: #003366 
+  color: #003366;
 }
 
 .form > label {
@@ -234,6 +230,7 @@ tbody tr:nth-child(odd) {
   min-width: 30px;
 }
 
+/* Button Styling */
 .editBtn {
   background-color: #f9f9f9;
   border-radius: 8px;
@@ -254,6 +251,7 @@ tbody tr:nth-child(odd) {
   color: #3366cc;
 }
 
+/* Login Notice Styling */
 .login-notice {
   display: flex;
   width: 100%;

@@ -5,6 +5,7 @@ import { Sequelize } from 'sequelize';
 import { UserFactory } from './user';
 import { TicketFactory } from './ticket';
 
+// Initialize Sequelize with the database connection
 const sequelize = process.env.DATABASE_URL
   ? new Sequelize(process.env.DATABASE_URL, {
       dialect: 'postgres',
@@ -24,10 +25,13 @@ const sequelize = process.env.DATABASE_URL
       },
     });
 
+// Initialize User and Ticket models
 const User = UserFactory(sequelize);
 const Ticket = TicketFactory(sequelize);
 
+// Define associations between User and Ticket models
 User.hasMany(Ticket, { foreignKey: 'assignedUserId' });
 Ticket.belongsTo(User, { foreignKey: 'assignedUserId', as: 'assignedUser' });
 
+// Export the initialized Sequelize instance and models
 export { sequelize, User, Ticket };

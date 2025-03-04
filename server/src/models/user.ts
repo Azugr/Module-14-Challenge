@@ -1,14 +1,17 @@
 import { DataTypes, Sequelize, Model, Optional } from 'sequelize';
 import bcrypt from 'bcrypt';
 
+// Define the attributes for the User model
 interface UserAttributes {
   id: number;
   username: string;
   password: string;
 }
 
+// Define the attributes for creating a User
 interface UserCreationAttributes extends Optional<UserAttributes, 'id'> {}
 
+// Define the User model class
 export class User extends Model<UserAttributes, UserCreationAttributes> implements UserAttributes {
   public id!: number;
   public username!: string;
@@ -23,11 +26,13 @@ export class User extends Model<UserAttributes, UserCreationAttributes> implemen
     this.password = await bcrypt.hash(password, saltRounds);
   }
 
+  // Check if the provided password matches the stored password
   public checkPassword(loginPw: string): boolean {
     return bcrypt.compareSync(loginPw, this.password);
   }
 }
 
+// Define the User model factory function
 export function UserFactory(sequelize: Sequelize): typeof User {
   User.init(
     {

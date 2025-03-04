@@ -4,13 +4,16 @@ import { login } from '../api/authAPI';
 import type { UserLogin } from '../interfaces/UserLogin';
 
 const Login = () => {
+  // State to store login data
   const [loginData, setLoginData] = useState<UserLogin>({
     username: '',
     password: '',
   });
 
+  // State to store error messages
   const [error, setError] = useState<string | null>(null);
 
+  // Handle changes in input fields
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
@@ -21,6 +24,7 @@ const Login = () => {
     });
   };
 
+  // Handle form submission
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setError(null);
