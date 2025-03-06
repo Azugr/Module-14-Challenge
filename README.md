@@ -19,7 +19,6 @@ A walkthrough video is included in the submission. It covers:
 - Application setup and features.
 - User authentication flow.
 - Creating and managing tickets on the Kanban board.
-- API testing with Insomnia.
 
 [🔗 Watch the Walkthrough Video](INSERT_VIDEO_LINK_HERE)
 

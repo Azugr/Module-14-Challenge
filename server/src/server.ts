@@ -31,4 +31,6 @@ sequelize.sync({ force: forceDatabaseRefresh }).then(() => {
   app.listen(PORT, () => {
     console.log(`Server is listening on port ${PORT}`);
   });
+}).catch((err) => {
+  console.error('Unable to connect to the database:', err);
 });
