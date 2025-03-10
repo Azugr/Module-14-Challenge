@@ -4,18 +4,11 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 import express from 'express';
-import cors from 'cors'; 
 import routes from './routes/index.js';
 import { sequelize } from './models/index.js';
 
 const app = express();
 const PORT = process.env.PORT || 3001;
-
-// Use cors middleware
-app.use(cors({
-  origin: 'https://module-14-challenge-sb45.onrender.com', 
-  credentials: true, 
-}));
 
 // Serve static files from the client's dist folder
 app.use(express.static('../client/dist'));
